@@ -172,6 +172,11 @@ img{
 <header>
     <h1>❤️ My soulmate ❤️</h1>
     <p>خيبتي</p>
+
+    <!-- ⏳ عداد الحب -->
+    <div id="timer" style="font-size:20px; margin-top:15px;">
+        <strong id="timePassed"></strong>
+    </div>
 </header>
 
 <button class="show-btn" onclick="showPhotos()">
@@ -180,7 +185,6 @@ img{
 
 <section id="photos">
     <h2>صورنا 📸</h2>
-
     <img src="image1.jpg">
     <img src="image2.jpg">
     <img src="image3.jpg">
@@ -200,7 +204,6 @@ img{
 
 <section class="memories">
     <h2>ذكرياتنا 💌</h2>
-
     <div class="memory">أول مرة شفتك فيها حسيت اننا مهنجين 😂❤️</div>
     <div class="memory">فاكره لما كنا في بروفة المسرح قولتلك ايه؟ 🥸</div>
     <div class="memory">دي مش ذكرى… بس متزعليش على أي حاجة 💕</div>
@@ -211,12 +214,11 @@ img{
 <script>
 function check(){
     const pass = document.getElementById("password").value;
-    const correct = "1710";
+    const correct = "1912";
 
     if(pass === correct){
         document.getElementById("login").style.display="none";
         document.getElementById("site").style.display="block";
-
         const music = document.getElementById("music");
         music.volume = 0.4;
         music.play();
@@ -231,7 +233,33 @@ function showPhotos(){
     photos.scrollIntoView({behavior:"smooth"});
 }
 
-/* توليد القلوب */
+/* ⏳ عداد الحب التصاعدي */
+const startDate = new Date("2025-07-23T17:00:00");
+
+function updateTimer(){
+    const now = new Date();
+
+    if(now < startDate){
+        document.getElementById("timePassed").innerHTML =
+            "⏳ مستنيين اللحظة اللي الحكاية تبدأ فيها ❤️";
+        return;
+    }
+
+    let diff = now - startDate;
+    const seconds = Math.floor(diff / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours   = Math.floor(minutes / 60);
+    const days    = Math.floor(hours / 24);
+
+    document.getElementById("timePassed").innerHTML =
+        `من يوم 23/7/2025 وإحنا مع بعض ❤️<br>
+         ${days} يوم 💞 ${hours % 24} ساعة ⏰ ${minutes % 60} دقيقة ⏳ ${seconds % 60} ثانية`;
+}
+
+updateTimer();
+setInterval(updateTimer, 1000);
+
+/* ❤️ توليد القلوب */
 function createHeart(){
     const heart = document.createElement("div");
     heart.className = "heart";
@@ -239,12 +267,9 @@ function createHeart(){
     heart.style.left = Math.random() * 100 + "vw";
     heart.style.fontSize = (14 + Math.random() * 22) + "px";
     heart.style.animationDuration = (6 + Math.random() * 4) + "s";
-
     document.getElementById("hearts").appendChild(heart);
-
     setTimeout(() => heart.remove(), 10000);
 }
-
 setInterval(createHeart, 500);
 </script>
 
